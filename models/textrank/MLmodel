@@ -1,0 +1,13 @@
+flavors:
+  python_function:
+    artifacts:
+      example:
+        path: artifacts/example.txt
+        uri: assets/example.txt
+    cloudpickle_version: 1.3.0
+    code: code
+    env: conda.yaml
+    loader_module: mlflow.pyfunc.model
+    python_model: python_model.pkl
+    python_version: 3.6.9
+utc_time_created: '2020-03-20 19:01:00.212094'

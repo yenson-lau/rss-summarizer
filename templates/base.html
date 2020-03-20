@@ -1,0 +1,14 @@
+<html>
+  <head>
+    {% if title %}
+    <title>{{ title }} - RSS Summarizer</title>
+    {% else %}
+    <title>RSS Summarizer</title>
+    {% endif %}
+  </head>
+  <body>
+      <div>RSS summarizer: <a href="/index">Home</a></div>
+      <hr>
+      {% block content %}{% endblock %}
+  </body>
+</html>

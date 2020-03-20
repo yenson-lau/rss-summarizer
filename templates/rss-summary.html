@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% autoescape false %}
+  {% for para in summary %}
+    <p> <tt>{{ para }}</tt> </p>
+  {% endfor %}
+{% endautoescape %}
+{% endblock %}
