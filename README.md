@@ -4,13 +4,14 @@
 **Push to Heroku repo:** `git push heroku master`
 
 # Deploy with docker
-## Locally
+**Locally**
 ```
 docker build -t rss_summarizer .
 docker run -it --name rss_summarizer -p 5000:5000 --rm rss_summarizer
 ```
 
-## On Heroku
+**On Heroku**
+
 https://devcenter.heroku.com/articles/container-registry-and-runtime
 
 Assuming Heroku remote already exists:
