@@ -44,7 +44,7 @@ RUN bash -c "source activate mlflow-env && \
 # COPY start.sh /root
 
 # Make our start script executable
-RUN ["chmod", "+x", "/root/start.sh"]
+RUN ["chmod", "+x", "/root/assets/docker_start.sh"]
 
 # Start the API
-ENTRYPOINT [ "/root/start.sh" ]
+ENTRYPOINT [ "/root/assets/docker_start.sh" ]
