@@ -14,8 +14,6 @@ from rss_summarizer import rss_summarize, parse_soup_tgts
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'any secret string'
 
-port = int(os.environ.get("PORT", 5000))
-
 # Load in the model at app startup
 model = mlflow.pyfunc.load_model('models/textrank')
 
@@ -86,4 +84,5 @@ def predict():
 # app.run(host='0.0.0.0', port=5000, debug=True)
 if __name__ == '__main__':
   # Get port from Heroku to avoid error
+  port = int(os.environ.get("PORT", 33507))
   app.run(host='0.0.0.0', debug=True, port=port)
