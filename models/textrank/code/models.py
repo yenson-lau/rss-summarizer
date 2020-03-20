@@ -59,7 +59,10 @@ class TextRank:
   def package(self, model_path='models/textrank'):
     class ModelWrapper(pyfunc.PythonModel):
       def load_context(self, context):
+        import nltk
         from models import TextRank
+
+        nltk.download('punkt')
         self.model = TextRank()
 
       def predict(self, context, model_input):
