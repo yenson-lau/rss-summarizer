@@ -31,15 +31,15 @@ ENV PATH /root/miniconda/bin:$PATH
 COPY . /root
 
 # Create a conda environment from the specified conda.yaml
-RUN conda env create --file /root/model/conda.yaml
+RUN conda env create --file /root/models/textrank/conda.yaml
 
 # Add to .bashrc
-RUN echo "source activate mlflow-env-iris" >> .bashrc
+RUN echo "source activate mlflow-env" >> .bashrc
 
 # Pip install api requirements into the conda env
 RUN bash -c "source activate mlflow-env && \
 	pip install --upgrade pip setuptools && \
-	pip install -r /root/requirements.txt --no-cache-dir"
+	pip install -r /root/assets/web_requirements.txt --no-cache-dir"
 
 # COPY start.sh /root
 

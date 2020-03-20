@@ -1,6 +1,7 @@
 import os, shutil
 import mlflow
 import nltk
+import pip
 import summa.summarizer
 import sumy
 from mlflow import pyfunc
@@ -14,9 +15,10 @@ warnings.filterwarnings('ignore')
 
 CONDA_ENV = { 'name': 'mlflow-env',
               'channels': ['defaults'],
-              'dependencies': ['python=3.6.9', {
+              'dependencies': ['python=3.6.10', {
                 'pip':[ f'mlflow=={mlflow.__version__}',
                         f'cloudpickle==1.3.0',
+                        f'pip=={pip.__version__}',
                         f'nltk=={nltk.__version__}',
                         f'pandas==1.0.3',
                         f'summa==1.2.0',
@@ -31,6 +33,9 @@ def save_pyfunc(model_path, model, artifacts, code_path):
                     conda_env=CONDA_ENV, artifacts=artifacts,
                     code_path=code_path)
 
+
+# Any downloading that needs to happen
+nltk.download('punkt')
 
 
 class TextRank:
@@ -62,7 +67,6 @@ class TextRank:
         import nltk
         from models import TextRank
 
-        nltk.download('punkt')
         self.model = TextRank()
 
       def predict(self, context, model_input):
