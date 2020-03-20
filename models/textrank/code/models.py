@@ -1,5 +1,6 @@
 import os, shutil
 import mlflow
+import nltk
 import summa.summarizer
 import sumy
 from mlflow import pyfunc
@@ -16,6 +17,7 @@ CONDA_ENV = { 'name': 'mlflow-env',
               'dependencies': ['python=3.6.9', {
                 'pip':[ f'mlflow=={mlflow.__version__}',
                         f'cloudpickle==1.3.0',
+                        f'nltk=={nltk.__version__}',
                         f'pandas==1.0.3',
                         f'summa==1.2.0',
                         f'sumy=={sumy.__version__}' ]
