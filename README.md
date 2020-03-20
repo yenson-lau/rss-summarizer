@@ -1,11 +1,14 @@
-# Deploy on Heroku with git
+# RSS Summarizer
+Currently deployed on [Heroku](summer-bridge-candle.herokuapp.com/).
+
+## Deploy on Heroku with git
 **Add Heroku remote**<br/>`heroku git:remote -a <app_name>`
 
 **Push to Heroku repo**<br/>`git push heroku master`
 
 <br/>
 
-# Deploy with docker
+## Deploy with docker
 **Locally**
 ```
 docker build -t rss_summarizer .
