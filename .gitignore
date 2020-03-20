@@ -4,5 +4,6 @@ __pycache__
 *.zip
 /activate
 /.bak
-/fetch
+assets/fetch
+assets/test_start.sh
 
