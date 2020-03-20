@@ -1,7 +1,7 @@
 # Deploy on Heroku with git
-**Add Heroku remote:** `heroku git:remote -a <app_name>`
-<br/>
-**Push to Heroku repo:** `git push heroku master`
+**Add Heroku remote**<br/>`heroku git:remote -a <app_name>`
+
+**Push to Heroku repo**<br/>`git push heroku master`
 
 # Deploy with docker
 **Locally**
