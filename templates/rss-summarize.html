@@ -1,26 +1,81 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>RSS Summarizer</h1>
-    <p>Default targets should work on <a href="https://www.cbc.ca/rss/">any CBC RSS feed</a>.</p>
-    <p><b>For Medium feeds,</b> such as <a href="https://medium.com/feed/towards-data-science">https://medium.com/feed/towards-data-science</a>, try: <br><tt>[ [('p', {'data-selectable-paragraph': ''})] ]</tt></p>
+  <h1>RSS Summarizer</h1>
+  <p>
+    Typical RSS applications allow users to maintain a large number of feeds. Whenever the application is opened, a table of metadata from the entries of each RSS feed is presented to the user.
+    This allows the user to scan through the titles and other metadata for a large number of articles each day.
+  </p>
+  <p>
+    On the other hand, someone who is trying to keep up to date with the latest news in their community will be bombarded with a large number of articles with similar looking titles.
+    It would be difficult to use RSS data alone to determine which articles are worth spending time on and which are not.
+  </p>
+  <p>
+    This app seeks to solve to this problem by presenting users with a short but targeted summary of each article in an RSS feed using a text summarization model.
+  </p>
 
-    <br>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.rss_url.label }}<br>
-            {{ form.rss_url(size=32) }}
-            {% for error in form.rss_url.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.html_tgts.label }}<br>
-            {{ form.html_tgts(size=32) }}
-            {% for error in form.html_tgts.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        <p>{{ form.submit() }}</p>
-    </form>
+  <hr>
+  <h2>Demo</h2>
+  <form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <p>
+      <b>{{ form.rss_url.label }}</b><br>
+      {{ form.rss_url(size=60, style='font-family: monospace') }}
+      {% for error in form.rss_url.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>
+      <b>{{ form.html_tgts.label }}</b>
+      &nbsp; -- &nbsp;
+      location of text for articles in the RSS feed
+      <br>
+      {{ form.html_tgts(size=60, style='font-family: monospace') }}
+      {% for error in form.html_tgts.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    <p>{{ form.submit() }}</p>
+  </form>
+
+  <p><br>Default targets should work on <a href="https://www.cbc.ca/rss/">any CBC RSS feed</a>.</p>
+  <p><b>For Medium feeds,</b> such as <a href="https://medium.com/feed/towards-data-science">https://medium.com/feed/towards-data-science</a>, try: <br><tt>[ [('p', {'data-selectable-paragraph': ''})] ]</tt></p>
+  <hr>
+
+  <h3>Target elements</h3>
+  <ul>
+    <li>
+      The format of the target elements is a string: &nbsp;
+      <tt>[ <i>target1</i>, <i>target2</i>, ... ]</tt> &nbsp;.
+    </li> <br>
+    <li>
+      Each <tt><i>target</i></tt> is formatted as &nbsp;
+      <tt>[(<i>element1</i>, <i>attributes1</i>), ..., (<i>elementN</i>, <i>attributesN</i>)]</tt> &nbsp;.
+    </li><br>
+    <li>
+      Each set of attributes <tt><i>attributes</i></tt> takes the form of a dictionary: &nbsp;
+      <tt>{<i>attr1</i>: <i>val1</i>, <i>attr2</i>: <i>val2</i>, ...}</tt> &nbsp;.
+      <ul><li>
+        If no attributes are needed, the <tt><i>attributes</i></tt> string of the element is empty, e.g. <tt>(<i>element</i>,)</tt>&nbsp;.
+      </li></ul>
+    </li> <br>
+    <li>
+      Text from each target is extracted by going down the list of elements. The first match for each element is traversed until the last element, for which all matches are extracted.
+      So for example,
+      <ul>
+        <li>
+          <tt>[[('div', {'class': 'story'}), ('p',)]]</tt> &nbsp; selects all paragraphs within the first <tt>div</tt> with <tt>class="story"</tt>.
+        </li>
+        <li>
+            <tt>[ [('p', {'data-selectable-paragraph': ''})] ]</tt> &nbsp; selects all paragraphs with the property <tt>data-selectable-paragraph</tt>.
+        </li>
+      </ul>
+    </li> <br>
+    <li>
+      Each article is extracted by concatenating texts from each target.
+    </li>
+  </ul>
+  <p>
+    This is a fairly inelegant solution which is only used for demoing purposes.
+  </p>
+
 {% endblock %}

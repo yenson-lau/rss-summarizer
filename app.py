@@ -30,14 +30,7 @@ class RequestForm(FlaskForm):
 
 
 
-# Meta data endpoint
 @app.route('/', methods=['GET', 'POST'])
-def hello_world():
-  return "Hello World!"
-
-
-
-@app.route('/rss', methods=['GET', 'POST'])
 def req_rss_sum():
   form = RequestForm()
 
@@ -62,7 +55,10 @@ def req_rss_sum():
 
 
 # Prediction endpoint
-@app.route('/predict', methods=['POST'])
+@app.route('/predict', methods=['GET', 'POST'])
+def placeholder():
+  return "This doesn't exist yet. Sorry!"
+
 def predict():
   req = request.get_json()
 
@@ -80,6 +76,9 @@ def predict():
 
   # Return prediction as reponse
   return jsonify(pred)
+
+
+
 
 # app.run(host='0.0.0.0', port=5000, debug=True)
 if __name__ == '__main__':

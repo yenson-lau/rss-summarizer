@@ -1,6 +1,8 @@
 # RSS Summarizer
 Currently deployed on [Heroku](summer-bridge-candle.herokuapp.com/).
 
+<br/>
+
 ## Deploy on Heroku with git
 **Add Heroku remote**<br/>`heroku git:remote -a <app_name>`
 
