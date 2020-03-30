@@ -6,7 +6,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 
-from rss_summarizer import rss_summarize, parse_soup_tgts
+from rss_summarizer import summarize, rss_summarize, parse_soup_tgts
 
 
 
@@ -31,7 +31,7 @@ class RequestForm(FlaskForm):
 
 
 @app.route('/', methods=['GET', 'POST'])
-def req_rss_sum():
+def rss_demo():
   form = RequestForm()
 
   if form.validate_on_submit():
@@ -43,7 +43,7 @@ def req_rss_sum():
       return "Error!"
     else:
       rss = {1: {'url':form.rss_url.data, 'tgts':tgts}}
-      summary = rss_summarize(rss , tWidth=85, aLim=5)
+      summary = rss_summarize(rss , model=model, tWidth=85, aLim=5)
       summary = summary.split('\n\n')
       summary = [re.sub(r'\n', r'<br/>', p) for p in summary]
       return render_template( 'rss-summary.html', title='Summary',
@@ -53,35 +53,35 @@ def req_rss_sum():
                          title='Summarize', form=form)
 
 
-
-# Prediction endpoint
-@app.route('/predict', methods=['GET', 'POST'])
-def placeholder():
-  return "This doesn't exist yet. Sorry!"
-
-def predict():
+@app.route('/rss', methods=['POST'])
+def flask_rss_summary():
   req = request.get_json()
-
-  # Log the request
   print({'request': req})
 
-  # Format the request data in a DataFrame
-  inf_df = pd.DataFrame(req['data'])
 
-  # Get model prediction - convert from np to list
-  pred = model.predict(inf_df).tolist()
+  summary = rss_summarize(req['rss'],
+                          model=model,
+                          mode=req['mode'], length=req['length'],
+                          tWidth=85, aLim=req['article_lim'])
 
-  # Log the prediction
-  print({'response': pred})
-
-  # Return prediction as reponse
-  return jsonify(pred)
+  print({'response': summary})
+  return summary
 
 
+@app.route('/texts', methods=['POST'])
+def flask_text_summary():
+  req = request.get_json()
+  print({'request': req})
+
+  summary = summarize(req['data'], model=model, mode=req['mode'], length=req['length'])
+
+  print({'response': summary})
+  return jsonify(summary)
 
 
 # app.run(host='0.0.0.0', port=5000, debug=True)
 if __name__ == '__main__':
   # Get port from Heroku to avoid error
   port = int(os.environ.get("PORT", 5000))
+  print(f'*** Using port {port}. ***')
   app.run(host='0.0.0.0', debug=True, port=port)

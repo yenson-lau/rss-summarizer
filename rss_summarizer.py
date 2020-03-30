@@ -11,10 +11,13 @@ from html.parser import HTMLParser
 from urllib.request import Request, urlopen
 
 
+model = pyfunc.load_model('models/textrank')
+
 reSubs = [
   (r'\xa0', ' '),    # replace incorrect spaces
   (r'\.\.\.', '…')   # replace '...' with '…'; periods mistaken as a sentence
 ]
+
 
 class TagRemover(HTMLParser):
   def __init__(self):
@@ -68,12 +71,11 @@ def truncate(text, width):
   return text if len(text)<=width else text[:width-3]+'...'
 
 
-def summarize(texts, mode='sentences', length=3):
+def summarize(texts, model=model, mode='sentences', length=3):
   isstr = type(texts) is str
   if isstr:  texts = [texts]
   n = len(texts)
 
-  model = pyfunc.load_model('models/textrank')
   data = pd.DataFrame({'text': texts, 'mode':[mode]*n, 'length':[length]*n})
   summaries = model.predict(data)
   return summaries[0] if isstr else summaries
@@ -123,7 +125,7 @@ def parse_soup_tgts(tgts_str):
   return tgts if success else None
 
 
-def rss_summarize(rss, tWidth=70, aLim=5):
+def rss_summarize(rss, model=model, mode='sentences', length=3, tWidth=70, aLim=5):
   texts = {k: [] for k in rss}
   entries = texts.copy()
   for k, v in rss.items():
@@ -142,7 +144,7 @@ def rss_summarize(rss, tWidth=70, aLim=5):
     out.append('='*tWidth)
 
     for text, entry in zip(texts[k], entries[k]):
-      summary = summarize(text)
+      summary = summarize(text, model=model, mode=mode, length=length)
 
       out.append('-'*tWidth)
       out.append(truncate(entry.title, tWidth-5))
