@@ -3,6 +3,8 @@ Currently deployed on [Heroku](volatile-steel.herokuapp.com).
 
 Capstone project for [Aggregate Intellect's](https://ai.science/) NLP and MLOps workshop: see [slides](bit.ly/2xzUbny) and [video](youtu.be/mVaSX-C38GA).
 
+<br/>
+
 ## Using the POST methods `texts` and `rss`
 See the example JSON POST queries `example_texts.json` and `example_rss.json`.
 
