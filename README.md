@@ -6,7 +6,16 @@ Currently deployed on [Heroku](volatile-steel.herokuapp.com).
 <br/>
 
 ## Using the POST methods `texts` and `rss`
-See the example JSON POST queries `example_texts.json` and `example_rss.json`.
+See the example JSON POST queries `example_texts_*.json` and `example_rss.json` in the `demo` folder, and run something like
+
+```
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data \'$(cat demo/example_texts_1.json)\' \
+  https://volatile-steel.herokuapp.com/texts
+
+curl -X POST -H "Content-Type: application/json" -d @demo/example_texts.json https://volatile-steel.herokuapp.com/texts
+```
 
 <br/>
 
@@ -33,7 +42,7 @@ Assuming Heroku remote already exists:
 heroku container:login
 
 # this will take a long time and push a large image
-heroku container:push web  
+heroku container:push web
 
 heroku container:release web
 
