@@ -1,0 +1,15 @@
+{
+	"rss": {
+	    "cbc-tech": {
+	      "url": "https://www.cbc.ca/cmlink/rss-technology",
+	      "tgts": [ [["div", {"class": "story"}], ["p"]] ]
+	    },
+	    "med-tds": {
+	      "url": "https://medium.com/feed/towards-data-science",
+	      "tgts": [ [["p", {"data-selectable-paragraph": ""}]] ]
+	    }
+	},
+	"article_lim": 2,
+	"mode": "sentences",
+	"length": 2
+}

@@ -1,5 +1,8 @@
 # RSS Summarizer
-Currently deployed on [Heroku](summer-bridge-candle.herokuapp.com/).
+Currently deployed on [Heroku](volatile-steel.herokuapp.com).
+
+## Using the POST methods `texts` and `rss`
+See the example JSON POST queries `example_texts.json` and `example_rss.json`.
 
 <br/>
 
